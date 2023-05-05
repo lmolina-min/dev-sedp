@@ -21,6 +21,24 @@ foreach ($query2 as $query) {
 	$cod_nivel .= $query['id_coord'] <> 0 ? "|" . $query['id_coord'] : '';
 }
 
+function des_nivel ($query2){
+	$nivel = '';
+	$cod_nivel = '';
+	foreach ($query2 as $query2) {
+		$gerencia_gral = $query2['gerencia_gral'] . "|";
+		$gerencia = $query2['gerencia'];
+		$gerenciaop = $query2['gerencia_gral_op'] != '' ? "|" . $query2['gerencia_gral_op'] : '';
+		$division = $query2['division'] != '' ? "|" . $query2['division'] : '';
+		$departamento = $query2['departamento'] != '' ? "|" . $query2['departamento'] : '';
+		$coordinacion = $query2['coordinacion'] != '' ? "|" . $query2['coordinacion'] : '';
+		$oficinas = $query2['oficinas'] != '' ? "|" . $query2['oficinas'] : '';
+		$nivel = $gerencia_gral . $gerencia . $gerenciaop . $division . $departamento . $coordinacion . $oficinas;
+	}
+	$des = explode("|", $nivel );
+	return $des[count($des)-1];
+}
+
+$_SESSION['cod_nivel'] = $cod_nivel;
 $_SESSION['descripcion_nivel_org'] = $nivel;
 ?>
 
