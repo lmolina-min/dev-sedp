@@ -4,8 +4,8 @@
 include_once 'head.php';
 include_once 'navbar.php';
 include_once 'aside.php';
-//require_once './acceso/conection.php';
-//  echo "la sesion del nivel org es:". $_SESSION["nivel_org"];
+// require_once './acceso/conection.php';
+// echo "la sesion del nivel org es:". $_SESSION["nivel_org"];
 
 $bd_servidor	= "localhost";
 $bd_nombre		= "test"; //"bd_combustible";//
