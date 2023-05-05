@@ -11,9 +11,9 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<!-- Bootstrap 4 -->
-<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+<!-- Bootstrap 5 -->
+<!-- <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
@@ -51,4 +51,4 @@
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="dist/js/pages/dashboard.js"></script> -->
+<script src="dist/js/pages/dashboard.js"></script>
