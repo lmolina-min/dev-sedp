@@ -22,7 +22,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // the start of the session.
     <link rel="icon" href="/assets/images/favicon/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/favicon/apple-touch-icon.png">
     <title><?= $title ?></title>
-
     <?php include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/styles.php') ?>
   </head>
 

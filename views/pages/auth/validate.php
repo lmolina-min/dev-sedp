@@ -13,7 +13,7 @@ if(isset($_POST['usuario']) && isset($_POST['contraseña'])) {
 		$_SESSION["evaluador"] = $user['evaluador'];
         $_SESSION['alert'] = [
             'message' => 'Bienvenido '.$_SESSION["usuario"],
-            'status' => 'success',
+            'status' => 'info',
             'y' => 'top',
             'x' => 'right',
         ];

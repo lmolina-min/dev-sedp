@@ -48,13 +48,12 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 		<div class="container-fluid">
 			<div class="row mb-4">
 				<div class="col-12">
-					<h2 class="m-0 fw-bold text-capitalize">Estadisticas generales</h2>
-					<p class="text-secondary">
-						<?php
-							$cargo = explode(">", $_SESSION["descripcion_nivel_org"]);
-							echo ((count($cargo) > 2) ? ucwords(strtolower($cargo[count($cargo) - 1])) : ucwords(strtolower($cargo[0])));
-						?>
-					</p>
+					<?php
+						$cargo = explode(">", $_SESSION["descripcion_nivel_org"]);
+						$cargo = ucfirst(trim(strtolower((count($cargo) > 2) ? $cargo[count($cargo) - 1] : $cargo[0])));
+					?>
+					<h2 class="m-0 fw-bold"><?= $cargo ?></h2>
+					<p class="text-secondary">Estadisticas generales</p>
 				</div>
 			</div>
 		</div>
@@ -66,239 +65,240 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 	$evaluados = count($query);
 	$progres_eval = $total_emp[0]["total"] != 0 ? round((count($query) * 100) / ($total_emp[0]["total"])) : 0;
 	$progres_tam = $progres_eval == 0 ? 80 : $progres_eval;
-
-	if (count($query) < 9) {
+	if (count($query) > 0) {
+		if (count($query) < 9) {
 	?>
-		<section class="content">
-			<div class="container-fluid">
-				<div class="row mb-4">
-					<div class="col-12">
-						<div class="card card-secondary shadow">
-							<div class="card-header">
-								<h3 class="card-title">Empleados a cargo</h3>
+			<!-- Lista de empleados -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row mb-4">
+						<div class="col-12">
+							<div class="card card-dark shadow">
+								<div class="card-header">
+									<h3 class="card-title">Empleados a cargo</h3>
 
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="maximize">
-										<i class="fas fa-expand"></i>
-									</button>
-									<button type="button" class="btn btn-tool" data-card-widget="collapse">
-										<i class="fas fa-minus"></i>
-									</button>
+									<div class="card-tools">
+										<button type="button" class="btn btn-tool" data-card-widget="maximize">
+											<i class="fas fa-expand"></i>
+										</button>
+										<button type="button" class="btn btn-tool" data-card-widget="collapse">
+											<i class="fas fa-minus"></i>
+										</button>
+									</div>
 								</div>
-							</div>
-							<div class="card-body">
-								<div class="d-flex flex-wrap" style="row-gap: 10px;">
-									<?php $i = 1;
-									foreach ($query as $query) {
-										$progres = ($query['puntaje'] * 100) / 20;
-										if ($query['puntaje'] <= 8) {
-											$color = 'border-danger';
-										} elseif ($query['puntaje'] > 8 && $query['puntaje'] <= 14) {
-											$color = 'border-warning';
-										} elseif ($query['puntaje'] > 14 && $query['puntaje'] <= 18) {
-											$color = 'border-primary';
-										} else {
-											$color = 'border-success';
-										}
-									?>
-										<div class="co-12 col-md-3">
-											<div class="info-box h-100 elevation-1">
-												<span class="info-box-icon">
-													<?php
-													$user = $bd->getDatosEmpleado($query['id']);
-													$foto_emp = '/assets/images/avatars/blank.png';
-													if ($user) {
-														$foto_emp = (file_exists('assets/images/empleados/'.$user['login'].'.jpg'))
-														? '/assets/images/empleados/'.$user['login'].'.jpg'
-														: '/assets/images/avatars/blank.png';
-													}
-													?>
-													<img class="rounded-circle <?= $color ?>" src="<?= $foto_emp ?>" alt="Foto de perfil de usuario" 
-													style="width: 70px; height: 70px; object-position: center center; object-fit: cover; border: solid 4px;">
-												</span>
-
-												<div class="info-box-content">
-													<span class="info-box-text"><?php echo $query['nombre'] . " " . $query['apellido']; ?></span>
-													<small class="info-box-text-content h8"><?php echo $query['cargo']; ?></small>
-													<span class="info-box-number">
-														<?php echo $progres; ?>
-														<small>%</small>
+								<div class="card-body">
+									<div class="d-flex flex-wrap" style="row-gap: 10px;">
+										<?php $i = 1;
+										foreach ($query as $query) {
+											$progres = ($query['puntaje'] * 100) / 20;
+											if ($query['puntaje'] <= 8) {
+												$color = 'border-danger';
+											} elseif ($query['puntaje'] > 8 && $query['puntaje'] <= 14) {
+												$color = 'border-warning';
+											} elseif ($query['puntaje'] > 14 && $query['puntaje'] <= 18) {
+												$color = 'border-primary';
+											} else {
+												$color = 'border-success';
+											}
+										?>
+											<div class="co-12 col-md-3">
+												<div class="info-box h-100 elevation-1">
+													<span class="info-box-icon">
+														<?php
+														$user = $bd->getDatosEmpleado($query['id']);
+														$foto_emp = '/assets/images/avatars/blank.png';
+														if ($user) {
+															$foto_emp = (file_exists('assets/images/empleados/'.$user['login'].'.jpg'))
+															? '/assets/images/empleados/'.$user['login'].'.jpg'
+															: '/assets/images/avatars/blank.png';
+														}
+														?>
+														<img class="rounded-circle <?= $color ?>" src="<?= $foto_emp ?>" alt="Foto de perfil de usuario" 
+														style="width: 70px; height: 70px; object-position: center center; object-fit: cover; border: solid 4px;">
 													</span>
+
+													<div class="info-box-content">
+														<span class="info-box-text"><?php echo $query['nombre'] . " " . $query['apellido']; ?></span>
+														<small class="info-box-text-content h8"><?php echo $query['cargo']; ?></small>
+														<span class="info-box-number">
+															<?php echo $progres; ?>
+															<small>%</small>
+														</span>
+													</div>
 												</div>
 											</div>
-										</div>
-									<?php
-									}
-									?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section class="content">
-			<div class="container-fluid">
-				<div class="row mb-4">
-					<div class="col-sm-4">
-						<div class="card bg-primary shadow h-100">
-							<div class="card-body d-flex flex-column justify-content-center align-items-center">
-								<input class="knob" type="text" disabled readonly value="<?= $progres_eval; ?>" data-width="<?= $progres_tam; ?>" data-height="<?= $progres_tam; ?>" data-fgColor="#ffffff" data-bgColor="#007bff">
-								<p class="form-text">Progreso de las Evaluaciones</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-4">
-						<div class="card bg-dark shadow h-100">
-							<div class="card-body d-flex flex-column justify-content-center align-items-center">
-								<p class="text-center"><strong>Totales</strong></p>
-
-								<div class="progress-group">
-									Empleados Evaluados
-									<span class="ml-4"><?php echo $evaluados; ?>/<?php echo $total_emp[0]['total']; ?></span>
-									<div class="progress progress-sm">
-										<div class="progress-bar bg-success" style="width: 90%"></div>
-									</div>
-								</div>
-
-								<div class="progress-group">
-									Empleados por evaluar
-									<span class="ml-4"><?php echo ($total_emp[0]['total']) - $evaluados; ?></span>
-									<div class="progress progress-sm">
-										<div class="progress-bar bg-danger" style="width: 90%"></div>
+										<?php
+										}
+										?>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-sm-4">
-						<div class="card bg-primary shadow h-100">
-							<div class="card-body d-flex flex-column justify-content-center align-items-center">
-								<input class="knob" type="text" disabled readonly value="<?= $progres_eval; ?>" data-width="<?= $progres_tam; ?>" data-height="<?= $progres_tam; ?>" data-fgColor="#ffffff" data-bgColor="#007bff">
-								<p class="form-text">Progreso de las Evaluaciones</p>
-							</div>
-						</div>
-					</div>
 				</div>
-			</div>
-		</section>
-	<?php
-	} else {
-	?>
-		<section class="content">
-			<div class="container-fluid">
-				<div class="row mb-4 h-100">
-					<div class="col-sm-3 d-flex flex-column justify-content-between">
-						<div class="card bg-primary shadow h-100">
-							<div class="card-body d-flex flex-column justify-content-center align-items-center">
-								<input class="knob" type="text" disabled readonly value="<?= $progres_eval; ?>" data-width="<?= $progres_tam; ?>" data-height="<?= $progres_tam; ?>" data-fgColor="#ffffff" data-bgColor="#007bff">
-								<p class="form-text">Progreso de las Evaluaciones</p>
+			</section>
+
+			<!-- Estadisticas de evaluación -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row mb-4">
+						<div class="col-sm-6">
+							<div class="card bg-primary shadow h-100">
+								<div class="card-body d-flex flex-column justify-content-center align-items-center">
+									<input class="knob" type="text" disabled readonly value="<?= $progres_eval; ?>" data-width="<?= $progres_tam; ?>" data-height="<?= $progres_tam; ?>" data-fgColor="#ffffff" data-bgColor="#007bff">
+									<p class="form-text">Progreso de las Evaluaciones</p>
+								</div>
 							</div>
 						</div>
 
-						<div class="card bg-dark shadow h-100">
-							<div class="card-body d-flex flex-column justify-content-center align-items-center px-4">
-								<p class="text-center"><strong>Totales</strong></p>
-	
-								<div class="progress-group w-100 px-4">
-									<div class="d-flex flex-row justify-content-between">
+						<div class="col-sm-6">
+							<div class="card bg-dark shadow h-100">
+								<div class="card-body d-flex flex-column justify-content-center align-items-center">
+									<p class="text-center"><strong>Totales</strong></p>
+
+									<div class="progress-group">
 										Empleados Evaluados
-										<span class="ml-4"><?= $evaluados ?>/<?= $total_emp[0]['total'] ?></span>
-									</div>	
-									<div class="progress progress-sm">
-										<div class="progress-bar bg-info" role="progressbar" style="width: <?= $progres_tam ?>%;" aria-valuemin="0" aria-valuemax="<?= $total_emp[0]['total'] ?>"></div>
+										<span class="ml-4"><?php echo $evaluados; ?>/<?php echo $total_emp[0]['total']; ?></span>
+										<div class="progress progress-sm">
+											<div class="progress-bar bg-success" style="width: 90%"></div>
+										</div>
+									</div>
+
+									<div class="progress-group">
+										Empleados por evaluar
+										<span class="ml-4"><?php echo ($total_emp[0]['total']) - $evaluados; ?></span>
+										<div class="progress progress-sm">
+											<div class="progress-bar bg-danger" style="width: 90%"></div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-sm-9">
-						<div class="card card-secondary shadow">
-						<div class="card-header">
-								<h3 class="card-title">Empleados a cargo</h3>
-			
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="maximize">
-										<i class="fas fa-expand"></i>
-									</button>
-									<button type="button" class="btn btn-tool" data-card-widget="collapse">
-										<i class="fas fa-minus"></i>
-									</button>
+				</div>
+			</section>
+	<?php
+		} else {
+	?>
+			<!-- Estadisticas de evaluación y tabla de empleados -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row mb-4 h-100">
+						<div class="col-sm-3 d-flex flex-column justify-content-between">
+							<div class="card bg-primary shadow h-100">
+								<div class="card-body d-flex flex-column justify-content-center align-items-center">
+									<input class="knob" type="text" disabled readonly value="<?= $progres_eval; ?>" data-width="<?= $progres_tam; ?>" data-height="<?= $progres_tam; ?>" data-fgColor="#ffffff" data-bgColor="#007bff">
+									<p class="form-text">Progreso de las Evaluaciones</p>
 								</div>
 							</div>
-			
-							<div class="card-body">
-								<div class="table-responsive">
-									<table id="tablaEvaluaciones" class="table table-hover table-striped">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Empleado</th>
-												<th>Cargo</th>
-												<th>Resultado</th>
-											</tr>
-										</thead>
-			
-										<tbody style="height: 300px !important;">
-											<?php
-											$i = 1;
-											foreach ($query as $query) {
-											?>
-												<tr id='emp-<?= $query['id'] ?>'>
-													<td><span class="text-muted fw-light fs-6"><?= $i ?></span></td>
-													<td>
-														<div class="d-flex align-self-center">
-															<div class="d-flex justify-content-start flex-row gap-2">
-															<h6 class="text-dark fw-bold fs-6"><?= ucwords(strtolower($query['nombre'])." ".strtolower($query['apellido'])) ?></h6>
-															<span class="text-muted fw-normal text-muted d-block fs-7"><?= number_format($query['cedula'], 0, ',', '.') ?></td></span>
-															</div>
-														</div>
-													</td>
-													<td>
-														<?php
-															$cargo = (explode(' ', $query['cargo'])[0] == 'ANALISTA') 
-															? ucwords(strtolower(explode(' ', $query['cargo'])[0]))." ".strtoupper(explode(' ', $query['cargo'])[1])
-															: ucfirst(strtolower($query['cargo']));
-															echo $cargo;
-														?>
-													</td>
-													<td>
-														<?php $progres = ($query['puntaje'] * 100) / 20;
-															if ($query['puntaje'] <= 8) {
-																$color = 'bg-danger';
-															} elseif ($query['puntaje'] > 8 && $query['puntaje'] <= 14) {
-																$color = 'bg-warning';
-															} elseif ($query['puntaje'] > 14 && $query['puntaje'] <= 18) {
-																$color = 'bg-primary';
-															} else {
-																$color = 'bg-success';
-															} 
-														?>
-														<div class="progress elevation-1">
-															<div class="progress-bar <?= $color ?>" role="progressbar" style="width: <?= $progres ?>%" aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
-													</td>
+
+							<div class="card bg-dark shadow h-100">
+								<div class="card-body d-flex flex-column justify-content-center align-items-center px-4">
+									<p class="text-center"><strong>Totales</strong></p>
+		
+									<div class="progress-group w-100 px-4">
+										<div class="d-flex flex-row justify-content-between">
+											Empleados Evaluados
+											<span class="ml-4"><?= $evaluados ?>/<?= $total_emp[0]['total'] ?></span>
+										</div>	
+										<div class="progress progress-sm">
+											<div class="progress-bar bg-info" role="progressbar" style="width: <?= $progres_tam ?>%;" aria-valuemin="0" aria-valuemax="<?= $total_emp[0]['total'] ?>"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="card card-secondary shadow">
+							<div class="card-header">
+									<h3 class="card-title">Empleados a cargo</h3>
+				
+									<div class="card-tools">
+										<button type="button" class="btn btn-tool" data-card-widget="maximize">
+											<i class="fas fa-expand"></i>
+										</button>
+										<button type="button" class="btn btn-tool" data-card-widget="collapse">
+											<i class="fas fa-minus"></i>
+										</button>
+									</div>
+								</div>
+				
+								<div class="card-body">
+									<div class="table-responsive">
+										<table id="evaluacionesTable" class="table table-hover table-striped">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Empleado</th>
+													<th>Cédula</th>
+													<th>Cargo</th>
+													<th>Resultado</th>
 												</tr>
-											<?php
-												$i++;
-											}
-											?>
-										</tbody>
-									</table>
+											</thead>
+				
+											<tbody style="height: 300px !important;">
+												<?php
+												$i = 1;
+												foreach ($query as $query) {
+												?>
+													<tr id='emp-<?= $query['id'] ?>'>
+														<td><span class="text-muted fw-light fs-6"><?= $i ?></span></td>
+														<td>
+															<div class="d-flex flex-row align-items-center gap-2">
+																<div class="widget-user-image">
+																	<img class="img-circle elevation-1" width="30" src="/assets/images/avatars/blank.png" alt="Foto de empleado">
+																</div>
+																<h6 class="text-dark fw-bold fs-6 m-0"><?= ucwords(mb_strtolower($query['nombre']." ".$query['apellido'], 'UTF-8')) ?></h6>
+															</div>
+														</td>
+														<td><span class="text-muted fw-normal text-muted d-block fs-7"><?= number_format($query['cedula'], 0, ',', '.') ?></span></td>
+														<td>
+															<?php
+																$cargo = (explode(' ', $query['cargo'])[0] == 'ANALISTA') 
+																? ucwords(strtolower(explode(' ', $query['cargo'])[0]))." ".strtoupper(explode(' ', $query['cargo'])[1])
+																: ucfirst(strtolower($query['cargo']));
+																echo $cargo;
+															?>
+														</td>
+														<td>
+															<?php $progres = ($query['puntaje'] * 100) / 20;
+																if ($query['puntaje'] <= 8) {
+																	$color = 'bg-danger';
+																} elseif ($query['puntaje'] > 8 && $query['puntaje'] <= 14) {
+																	$color = 'bg-warning';
+																} elseif ($query['puntaje'] > 14 && $query['puntaje'] <= 18) {
+																	$color = 'bg-primary';
+																} else {
+																	$color = 'bg-success';
+																} 
+															?>
+															<span style="display:none"><?= $progres ?></span>
+															<div class="progress elevation-1">
+																<div class="progress-bar <?= $color ?>" role="progressbar" style="width: <?= $progres ?>%" aria-valuemin="0" aria-valuemax="100">
+																</div>
+															</div>
+														</td>
+													</tr>
+												<?php
+													$i++;
+												}
+												?>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 	<?php
+		}
 	}
-
+	else {
+		echo '<p class="text-muted ms-3"><i class="fas fa-circle-info me-2"></i>No tiene empleados a su cargo</p>';
+	}
 	$titulo_graf = "Coordinaciones";
 	$enviar_th = 0;
 	if (isset($_SESSION['id_perfil']) && $_SESSION["id_perfil"] <> 5) {
@@ -393,11 +393,12 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 			$i++;
 		}
 	?>
+		<!-- Gráficas de niveles organizativos -->
 		<section class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12">
-						<div class="card card-secondary">
+						<div class="card card-dark">
 							<div class="card-header">
 								<h3 class="card-title">Evaluaciones por <?= strtolower($titulo_graf) ?></h3>
 
@@ -426,6 +427,7 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 
 	<input type="hidden" class="form-control" name="perfil" id="perfil" value="<?php echo $_SESSION["id_perfil"] ?>">
 
+	<!-- Boton de aprobación  -->
 	<?php
 	$tableresult = '<div class="info-box-text">Unidades sin completar el proceso de evaluación</div>';
 	$des = '';
@@ -484,33 +486,14 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 </div>
 
 <script>
-	var table = $('#tablaEvaluaciones').DataTable({
-		language: {
-			"decimal": ",",
-			"emptyTable": "No hay información",
-			"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
-			"infoPostFix": "",
-			"thousands": ",",
-			"lengthMenu": "Mostrar _MENU_ Entradas",
-			"loadingRecords": "Cargando...",
-			"processing": "Procesando...",
-			"search": "Buscar:",
-			"zeroRecords": "No se encontraron resultados",
-			"paginate": {
-				"first": "Primero",
-				"last": "Ultimo",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			}
-
-		},
+	var table = $('#evaluacionesTable').DataTable({
+		language: { url: '/plugins/lang/es_ES.json',},
 		processing: true,
         info: false,
         lengthChange: false,
         pageLength: 5,
-	}).buttons().container().appendTo('#tablaEvaluaciones_wrapper .col-md-6:eq(0)');
+		ordering: true,
+	}).buttons().container().appendTo('#evaluacionesTable_wrapper .col-md-6:eq(0)');
 
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip({

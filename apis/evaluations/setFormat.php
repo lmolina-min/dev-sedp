@@ -32,11 +32,14 @@ foreach ($query2 as $query2) {
 	if ($onivel == 1) {
 		$onivel++;
 		$tabla .= '
-		<div class="card-header d-flex flex-row justify-content-between align-items-center">
-            <h4 class="w-100 fs-6 fw-bold m-0">EVALUACIÓN DE DESEMPEÑO - '. strtoupper($nivel) .'</h4>
-			<div class="text-end card-tools">
+		<div class="card-header">
+            <h3 class="card-title">EVALUACIÓN DE DESEMPEÑO - '. strtoupper($nivel) .'</h3>
+			<div class="card-tools">
 				<button type="button" class="btn btn-tool" data-card-widget="maximize">
 					<i class="fas fa-expand"></i>
+				</button>
+				<button type="button" class="btn btn-tool" data-card-widget="collapse">
+					<i class="fas fa-minus"></i>
 				</button>
 			</div>
 		</div>

@@ -30,7 +30,7 @@ if (isset($_GET["nivel_org"])) {
 				<div class="container-fluid">
 					<div class="row mb-4">
 						<div class="col-12">
-							<div class="card card-secondary shadow">
+							<div class="card card-dark shadow">
 								<div class="card-header">
 									<h3 class="card-title">Empleados a cargo</h3>
 
@@ -166,7 +166,7 @@ if (isset($_GET["nivel_org"])) {
 						</div>
 
 						<div class="col-sm-9">
-							<div class="card card-secondary shadow">
+							<div class="card card-dark shadow">
 								<div class="card-header">
 									<h3 class="card-title">Empleados a cargo</h3>
 
@@ -182,7 +182,7 @@ if (isset($_GET["nivel_org"])) {
 
 								<div class="card-body">
 									<div class="table-responsive">
-										<table id="tablaEvaluaciones" class="table table-hover table-striped">
+										<table id="evaluacionesTable" class="table table-hover table-striped">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -246,13 +246,6 @@ if (isset($_GET["nivel_org"])) {
 				</div>
 				</div>
 			</section>
-
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-					</div>
-				</div>
-			</section>
 		<?php
 		}
 	} else {
@@ -313,27 +306,11 @@ if (isset($_GET["nivel_org"])) {
 
 
 <script>
-	var table = $('#example1').DataTable({
-		language: {
-			"decimal": "",
-			"emptyTable": "No hay información",
-			"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
-			"infoPostFix": "",
-			"thousands": ",",
-			"lengthMenu": "Mostrar _MENU_ Entradas",
-			"loadingRecords": "Cargando...",
-			"processing": "Procesando...",
-			"search": "Buscar:",
-			"zeroRecords": "Sin resultados encontrados",
-			"paginate": {
-				"first": "Primero",
-				"last": "Ultimo",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			}
-
-		}
-	}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+	var table = $('#evaluacionesTable').DataTable({
+		language: { url: '/plugins/lang/es_ES.json',},
+		processing: true,
+        info: false,
+        lengthChange: false,
+        pageLength: 5,
+	}).buttons().container().appendTo('#evaluacionesTable_wrapper .col-md-6:eq(0)');
 </script>

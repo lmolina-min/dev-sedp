@@ -48,7 +48,7 @@ if (isset($_GET["nivel_org"])) {
 				<div class="container-fluid">
 					<div class="row mb-4">
 						<div class="col-12">
-							<div class="card card-secondary shadow">
+							<div class="card card-dark shadow">
 								<div class="card-header">
 									<h3 class="card-title">Empleados a cargo</h3>
 
@@ -184,7 +184,7 @@ if (isset($_GET["nivel_org"])) {
 						</div>
 
 						<div class="col-sm-9">
-							<div class="card card-secondary shadow">
+							<div class="card card-dark shadow">
 								<div class="card-header">
 									<h3 class="card-title">Empleados a cargo</h3>
 
@@ -200,7 +200,7 @@ if (isset($_GET["nivel_org"])) {
 
 								<div class="card-body">
 									<div class="table-responsive">
-										<table id="tablaEvaluaciones" class="table table-hover table-striped">
+										<table id="evaluacionesTable" class="table table-hover table-striped">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -324,7 +324,7 @@ if (isset($_GET["nivel_org"])) {
 				<div class="container-fluid" id="grafica" style="display: none">
 					<div class="row">
 						<div class="col-12">
-							<div class="card card-secondary">
+							<div class="card card-dark">
 								<div class="card-header">
 									<h3 class="card-title">Evaluaciones por Departamentos/Coordinaciones</h3>
 
@@ -406,29 +406,13 @@ if (isset($_GET["nivel_org"])) {
 
 
 <script>
-	var table = $('#example1').DataTable({
-		language: {
-			"decimal": "",
-			"emptyTable": "No hay información",
-			"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
-			"infoPostFix": "",
-			"thousands": ",",
-			"lengthMenu": "Mostrar _MENU_ Entradas",
-			"loadingRecords": "Cargando...",
-			"processing": "Procesando...",
-			"search": "Buscar:",
-			"zeroRecords": "Sin resultados encontrados",
-			"paginate": {
-				"first": "Primero",
-				"last": "Ultimo",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			}
-
-		}
-	}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+	var table = $('#evaluacionesTable').DataTable({
+		language: { url: '/plugins/lang/es_ES.json',},
+		processing: true,
+        info: false,
+        lengthChange: false,
+        pageLength: 5,
+	}).buttons().container().appendTo('#evaluacionesTable_wrapper .col-md-6:eq(0)');
 
 	var pnum = 15;
 	var coord = 'micoord';
@@ -462,7 +446,7 @@ if (isset($_GET["nivel_org"])) {
 		var areaChartData3 = {
 			labels: micoord,
 			datasets: [{
-					label: 'Bajo Desempeño',
+					label: 'Deficiente',
 					backgroundColor: 'rgba(220,53,69,1)',
 					borderColor: 'rgba(60,141,188,0.8)',
 					pointRadius: false,
@@ -473,7 +457,7 @@ if (isset($_GET["nivel_org"])) {
 					data: midatabd
 				},
 				{
-					label: 'Desempeño Aceptable',
+					label: 'Aceptable',
 					backgroundColor: 'rgba(255, 193, 7, 1)',
 					borderColor: 'rgba(210, 214, 222, 1)',
 					pointRadius: false,
@@ -484,7 +468,7 @@ if (isset($_GET["nivel_org"])) {
 					data: midatada
 				},
 				{
-					label: 'Lo esperado',
+					label: 'Esperado',
 					backgroundColor: 'rgba(0, 123, 255, 1)',
 					borderColor: 'rgba(110, 114, 122, 1)',
 					pointRadius: false,
@@ -495,7 +479,7 @@ if (isset($_GET["nivel_org"])) {
 					data: midatale
 				},
 				{
-					label: 'Supera las Expectativas',
+					label: 'Destacado',
 					backgroundColor: 'rgba(40, 167, 69, 1)',
 					borderColor: 'rgba(110, 114, 122, 1)',
 					pointRadius: false,

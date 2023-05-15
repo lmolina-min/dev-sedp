@@ -31,35 +31,34 @@
     ?>
 
     <div class="d-flex flex-row w-100 h-100">
-      <div class="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-center bg-body">
-        <div class="d-flex flex-column align-items-center border-0 mb-4">
-          <img src="/assets/images/logos/logo.png" alt="Logo de Minerven" width="125">
-          <h4 class="text-center text-uppercase fw-bold mb-3">Minerven</h4>
-          <p class="text-muted fs-6">Ingrese sus datos</p>
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center bg-dark">
+        <div class="card p-2">
+          <div class="card-header border-0 d-flex flex-column align-items-center">
+            <img src="/assets/images/logos/logo.png" alt="Logo de Minerven" width="125">
+            <h4 class="text-uppercase text-dark" style="font-weight: 700;">Minerven</h4>
+          </div>
+          
+          <div class="card-body">
+            <p class="text-muted text-center fs-6">Ingrese sus datos</p>
+            <form method="POST" action="/views/pages/auth/validate.php" class="d-flex flex-column align-items-center">
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-user text-muted"></i></span>
+                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+              </div>
+    
+              <div class="input-group mb-4">
+                <span class="input-group-text"><i class="fas fa-lock text-muted"></i></span>
+                <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña">
+              </div>
+    
+              <button type="submit" class="btn btn-primary w-100 mb-3 rounded-1">Iniciar sesión</button>
+            </form>
+          </div>
+
+          <div class="card-footer pt-0">
+            <a href="http://192.168.1.20/intranet" class="d-block fw-light fs-6 text-center text-muted"><i class="fas fa-arrow-left me-4"></i> Regresar</a>
+          </div>
         </div>
-        <div class="px-4">
-          <form method="POST" action="/views/pages/auth/validate.php" class="d-flex flex-column align-items-center">
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="fas fa-user text-muted"></i></span>
-              <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
-            </div>
-
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fas fa-lock text-muted"></i></span>
-              <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña">
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 mb-4 rounded-1">Iniciar sesión</button>
-          </form>
-
-          <p class="text-center">
-            <a href="http://192.168.1.20/intranet" class="link link-dark link-underline link-underline-opacity-0"><i class="fas fa-arrow-left me-1"></i>Regresar</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="d-none d-lg-block col-lg-6">
-        <div class="bg-dark w-100 h-100"></div>
       </div>
     </div>
 

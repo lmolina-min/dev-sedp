@@ -26,6 +26,7 @@
 										<tr>
 											<th>#</th>
 											<th>Empleado</th>
+											<th>Cédula</th>
 											<th>Cargo</th>
 											<th>Resultado</th>
 										</tr>
@@ -38,14 +39,8 @@
 										?>
 											<tr id='emp-<?= $i ?>'>
 												<td><span class="text-muted fw-light fs-6"><?= $i ?></span></td>
-												<td>
-													<div class="d-flex align-userss-center">
-														<div class="d-flex justify-content-start flex-row gap-2">
-														<h6 class="text-dark fw-bold fs-6"><?= ucwords(strtolower($query['nombre'])." ".strtolower($query['apellido'])) ?></h6>
-														<span class="text-muted fw-normal text-muted d-block fs-7"><?= number_format($query['cedula'], 0, ',', '.') ?></td></span>
-														</div>
-													</div>
-												</td>
+												<td><h6 class="text-dark fw-bold fs-6"><?= ucwords(mb_strtolower($query['nombre']." ".$query['apellido'], 'UTF-8')) ?></h6></td>
+												<td><span class="text-muted fw-normal text-muted d-block fs-7"><?= number_format($query['cedula'], 0, ',', '.') ?></span></td>
 												<td>
 													<?php
 														$cargo = (explode(' ', $query['cargo'])[0] == 'ANALISTA') 
@@ -66,8 +61,10 @@
 															$color = 'bg-success';
 														} 
 													?>
+													<span style="display:none"><?= $progres ?></span>
 													<div class="progress elevation-1">
-														<div class="progress-bar <?= $color ?>" role="progressbar" style="width: <?= $progres ?>%" aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar <?= $color ?>" style="width: <?= $progres ?>%" aria-valuemin="0" aria-valuemax="100">
+														<div>
 													</div>
 												</td>
 											</tr>
@@ -84,70 +81,16 @@
 			</div>
 		</section>
 	<?php
-
 	}
 	?>
 
 	<input type="hidden" class="form-control" name="perfil" id="perfil" value="<?= $_SESSION["id_perfil"] ?>">
 </div>
 
-
-
-
 <script>
-	$(document).ready(function() {
-		$("#nivel_org").on('change', function() {
-			$("#nivel_org option:selected").each(function() {
-				nivel = $(this).val();
-				parametros = {
-					"nivel_org": nivel
-				};
-				$.ajax({
-					type: "POST",
-					url: "reportes_th.php",
-					data: parametros,
-					success: function(datos) {
-						//$("#nivel_org").html(datos);
-						document.myform.submit();
-					}
-				});
-			});
-		});
-	});
-
-	// function getBase64Image(img) {
-	// 	var canvas = document.createElement("canvas");
-	// 	canvas.width = img.width;
-	// 	canvas.height = img.height;
-	// 	var ctx = canvas.getContext("2d");
-	// 	ctx.drawImage(img, 0, 0);
-	// 	var dataURL = canvas.toDataURL("image/png");
-	// 	return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
-	// }
-
 	let title = "Sistema de Evaluación de Desempeño";
 	$('#tablaReportes').DataTable({
-		language: {
-			"decimal": ",",
-			"emptyTable": "No hay información",
-			"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
-			"infoPostFix": "",
-			"thousands": ",",
-			"lengthMenu": "Mostrar _MENU_ Entradas",
-			"loadingRecords": "Cargando...",
-			"processing": "Procesando...",
-			"search": "Buscar:",
-			"zeroRecords": "No se encontraron resultados",
-			"paginate": {
-				"first": "Primero",
-				"last": "Ultimo",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			}
-
-		},
+		language: { url: '/plugins/lang/es_ES.json',},
 		dom: '<"dt-buttons">Bf<"clear">lrtp',
 		paging: true,
 		autoWidth: true,
