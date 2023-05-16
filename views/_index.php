@@ -50,7 +50,7 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 				<div class="col-12">
 					<?php
 						$cargo = explode(">", $_SESSION["descripcion_nivel_org"]);
-						$cargo = ucfirst(trim(strtolower((count($cargo) > 2) ? $cargo[count($cargo) - 1] : $cargo[0])));
+						$cargo = ucfirst(trim(strtolower((count($cargo) == 0) ? $cargo[0] : $cargo[count($cargo) - 1])));
 					?>
 					<h2 class="m-0 fw-bold"><?= $cargo ?></h2>
 					<p class="text-secondary">Estadisticas generales</p>
@@ -58,6 +58,23 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 			</div>
 		</div>
 	</div>
+
+	<!-- <div class="row">
+		<div class="col-5">
+			<div class="card card-info">
+				<div class="card-header">
+					<h4 class="card-title">Enviar mensajes</h4>
+				</div>
+
+				<div class="card-body">
+					<form action="/correo.php?enviar=aprobar-solicitud" method="POST">
+						<input class="form-control mb-3" type="email" name="correo" placeholder="correo">
+						<button class="btn btn-sm btn-primary" type="submit">Enviar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> -->
 
 	<?php
 	$query = $bd->getEmpleadosEvaluados($_SESSION["evaluador"]);
