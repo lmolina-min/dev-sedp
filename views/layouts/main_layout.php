@@ -7,8 +7,8 @@ if (!isset($_SESSION["is_auth"])) {
 }
 
 
-// destroy session in 15 minutes, 900ms = 15 minutes
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+//destroy session in 4 minutes, 240ms = 4 minutes
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 240)) {
   header("Location: /login.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // the start of the session.
