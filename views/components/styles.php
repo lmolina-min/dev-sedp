@@ -1,4 +1,4 @@
-<link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- DataTables -->
 <link href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">

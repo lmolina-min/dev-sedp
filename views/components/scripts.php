@@ -9,8 +9,6 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<!-- Bootstrap 5 -->
-<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables  & Plugins -->
 <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -52,6 +50,9 @@
 <script src="/plugins/adminlte/js/pages/dashboard.js"></script>
 <!-- Select2 -->
 <script src="/plugins/select2/js/select2.min.js"></script>
+<!-- Bootstrap 5 -->
+<script src="/plugins/bootstrap/js_old/bootstrap.bundle.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script>
     $(document).ready(() => {

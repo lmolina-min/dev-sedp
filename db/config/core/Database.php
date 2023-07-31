@@ -25,25 +25,24 @@ class Database
     /*                                              S E L E C T                                                  */
     /*************************************************************************************************************/
 
-    public function getLoginUsuario($login, $pass)
+    public function getUsuario($login, $pass)
     {
         try {
-            $query = "SELECT login, u.id_perfil, id_ccosto as id_nivel_org, emp.cedula as evaluador
-						FROM sc_datos_usuarios as u
-						INNER JOIN sc_perfiles as p
-						ON u.id_perfil=p.id_perfil 
- 						INNER JOIN se_empleado as emp
- 						ON emp.id=u.id_empleado
-						WHERE login=:login AND pass=:pass AND estatus='1'";
+            $sql = "SELECT u.login, u.id_perfil, id_ccosto AS id_nivel_org, e.cedula AS evaluador
+					FROM sc_datos_usuarios AS u
+					INNER JOIN sc_perfiles AS p ON p.id_perfil = u.id_perfil 
+ 					INNER JOIN se_empleado AS e ON e.id = u.id_empleado
+					WHERE login='$login' AND pass='$pass' AND estatus='1'";
 
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute([':login' => $login, ':pass' => $pass]);
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            // if ($this->showErrors) {
-            //     print_r("Error!: " . $e->getMessage() . "<br/>");
-            //     die();
-            // }
+        }
+        catch (PDOException $e) {
+            if ($this->showErrors) {
+                print_r("Error!: " . $e->getMessage() . "<br/>");
+                die();
+            }
             return false;
         }
     }
@@ -117,6 +116,7 @@ class Database
             return false;
         }
     }
+    
     public function getDatosEmpleado($id_empleado)
     {
         try {
@@ -317,11 +317,7 @@ class Database
             $query = "select estatus from se_evaluacion where id_empleado = (select id from se_empleado where cedula = " . $evaluador . ");";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            //if ($varios){
-            return ($stmt->fetch(PDO::FETCH_ASSOC));
-            //  }else{
-            //     return ($stmt->fetch(PDO::FETCH_ASSOC));
-            // }      
+            return ($stmt->fetch(PDO::FETCH_ASSOC));     
         } catch (PDOException $e) {
             // if ($this->showErrors) {
             //     print "Error!: " . $e->getMessage() . "<br/>";

@@ -8,10 +8,10 @@ if (!isset($_SESSION["is_auth"])) {
 
 
 //destroy session in 4 minutes, 240ms = 4 minutes
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 240)) {
-  header("Location: /login.php");
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // the start of the session.
+// if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 240)) {
+//   header("Location: /login.php");
+// }
+// $_SESSION['LAST_ACTIVITY'] = time(); // the start of the session.
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +30,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // the start of the session.
 
     <div class="wrapper">
       <?php
+      include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/scripts.php');
       include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/navbar.php');
       include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/aside.php');
-      include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/scripts.php');
       include($mainContent);
       include_once($_SERVER['DOCUMENT_ROOT'].'/views/components/footer.php');
       ?>
