@@ -131,7 +131,7 @@ $_SESSION['descripcion_nivel_org'] = $nivel;
 														}
 														?>
 														<img class="rounded-circle <?= $color ?>" src="<?= $foto_emp ?>" alt="Foto de perfil de usuario" 
-														style="width: 70px; height: 70px; object-position: center center; object-fit: cover; border: solid 4px;">
+														style="width: 70px; height: 70px; object-position: center center; object-fit: contain; border: solid 4px;">
 													</span>
 
 													<div class="info-box-content">

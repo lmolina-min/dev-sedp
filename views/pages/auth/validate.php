@@ -1,10 +1,19 @@
 <?php
+session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/db/conection.php');
 
+unset($_SESSION["is_auth"]);
+
+$_SESSION['alert'] = [
+    'message' => 'Datos incorrectos. Intente nuevamente',
+    'status' => 'danger',
+    'y' => 'top',
+    'x' => 'right',
+];
+
 if(isset($_POST['usuario']) && isset($_POST['contraseña'])) {
-    $user = $bd->getLoginUsuario($_POST['usuario'], ($_POST['contraseña']));
+    $user = $bd->getUsuario($_POST['usuario'], ($_POST['contraseña']));
     
-    session_start();
     if ($user) {
         $_SESSION["is_auth"] = true;
         $_SESSION["usuario"] = $user['login'];
@@ -20,14 +29,10 @@ if(isset($_POST['usuario']) && isset($_POST['contraseña'])) {
         header("location: /index.php");
     }
     else {
-        unset($_SESSION["is_auth"]);
-        $_SESSION['alert'] = [
-            'message' => 'Datos incorrectos. Intente nuevamente',
-            'status' => 'danger',
-            'y' => 'top',
-            'x' => 'left',
-        ];
-       header("location: /login.php");
+        header("location: /login.php");
     }
+}
+else {
+   header("location: /login.php");
 }
 ?>

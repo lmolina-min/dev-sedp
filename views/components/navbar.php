@@ -13,7 +13,7 @@
       <?php
       $foto_perfil = '/assets/images/avatars/blank.png';
       if ($_SESSION['usuario']) {
-        $foto_perfil = file_exists('/assets/images/empleados/'.$_SESSION['usuario'].'.jpg')
+        $foto_perfil = file_exists('assets/images/empleados/'.$_SESSION['usuario'].'.jpg')
         ? '/assets/images/empleados/'.$_SESSION['usuario'].'.jpg'
         : '/assets/images/avatars/blank.png';
       }
