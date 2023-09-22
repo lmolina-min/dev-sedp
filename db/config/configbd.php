@@ -1,7 +1,7 @@
 <?php
 	// Datos de la Conexión a la Base de Datos Local
 	$bd_servidor	= "localhost";
-	$bd_nombre		= "bd_eval_personal";
+	$bd_nombre		= "bd_sedp";
 	$bd_puerto		= "3306";
 	$bd_usuario		= "root";
 	$bd_clave		= "1234";

@@ -1,13 +1,17 @@
 <?php
 session_start();
-if ($_SESSION["id_perfil"] == 7) {
-    $title = "Reportes Talento Humano - Sistema de Evaluación de Desempeño";
-    $mainContent = 'views/pages/reports/_talento_humano.php';
-    include('views/layouts/main_layout.php');
-} 
-else {
-    $title = "Reportes Gerenciales - Sistema de Evaluación de Desempeño";
-    $mainContent = 'views/pages/reports/_gerencial.php';
-    include('views/layouts/main_layout.php');
+if (!isset($_SESSION["autenticado"])) {
+    session_destroy();
+    header("location: /login.php");
+}
+elseif (!isset($_GET["page"])) {
+    $title = "Resumen en lista - Sistema de Evaluación de Desempeño";
+    $mainContent = $_SERVER['DOCUMENT_ROOT'].'/views/reportes/_lista.php';
+    include('layouts/MainLayout.php');
+}
+elseif ($_GET["page"] == 'grafico') {
+    $title = "Resumen en gráfico - Sistema de Evaluación de Desempeño";
+    $mainContent = $_SERVER['DOCUMENT_ROOT'].'/views/reportes/_grafico.php';
+    include('layouts/MainLayout.php');
 }
 ?>
